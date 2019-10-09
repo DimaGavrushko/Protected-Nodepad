@@ -22,7 +22,7 @@ function getSessionKey() {
     return process.env.SESSION_KEY;
 }
 
-function encryptRSA(m, e, n) {
+function encryptSessionKey(m, e, n) {
     let resultKey = [];
     for (let i = 0; i < m.length; i++) {
         resultKey.push(bigInt(m.charCodeAt(i)).modPow(e, n).value.toString());
@@ -44,7 +44,7 @@ module.exports = {
     getSessionKey,
     generateRandomString,
     createSessionKey,
-    encryptRSA,
+    encryptSessionKey,
     readAllFileNames,
     readFile
 };

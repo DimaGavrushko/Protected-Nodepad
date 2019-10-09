@@ -28,12 +28,12 @@ function sendOpenKeyToServer() {
         .then(res => res.json())
         .then(sessionKeyArray => {
             keysPair = JSON.parse(getItemFromStorage('secret RSA key'));
-            const sessionKey = decryptKey(sessionKeyArray, keysPair.d, keysPair.n);
+            const sessionKey = decryptSessionKey(sessionKeyArray, keysPair.d, keysPair.n);
             sessionStorage.setItem('session key', sessionKey);
         })
 }
 
-function decryptKey(keyArray, d, n) {
+function decryptSessionKey(keyArray, d, n) {
     let res = '';
     keyArray.forEach(c => {
         res += String.fromCharCode(RSA.decrypt(c, d, n).value.toString());

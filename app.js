@@ -3,7 +3,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 const bodyParser = require('body-parser');
 const utils = require('./server/utils/utils');
-const aes = require('./server/service/aes');
+const aes = require('./server/services/aes');
 
 app.use('', express.static(__dirname + '/public'));
 app.use(bodyParser.json());
@@ -19,8 +19,7 @@ app.get('/getFiles', async (req, res) => {
 
 app.post('/sendKey', (req, res) => {
     utils.createSessionKey();
-    utils.encryptRSA(utils.getSessionKey(), req.body.e, req.body.n);
-    res.send(utils.encryptRSA(utils.getSessionKey(), req.body.e, req.body.n));
+    res.send(utils.encryptSessionKey(utils.getSessionKey(), req.body.e, req.body.n));
 });
 
 app.listen(port, () => console.log('Server is starting...'));
