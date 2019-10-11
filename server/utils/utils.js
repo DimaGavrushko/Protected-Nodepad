@@ -13,6 +13,7 @@ function generateRandomString(length) {
 
     return result;
 }
+
 function createSessionKey() {
     process.env.SESSION_KEY = generateRandomString(16);
 }

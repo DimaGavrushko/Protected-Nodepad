@@ -19,6 +19,7 @@ function sendOpenKeyToServer() {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Client-id': sessionStorage.getItem('id')
         },
         body: JSON.stringify({
             n: keysPair.n.value.toString(),
@@ -42,7 +43,13 @@ function decryptSessionKey(keyArray, d, n) {
 }
 
 function getFileNames() {
-    fetch('/getFiles')
+    fetch('/getFiles', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Client-id': sessionStorage.getItem('id')
+        }
+    })
         .then(res => res.json())
         .then(fileNames => {
             const select = document.getElementById('file-names');
@@ -53,4 +60,15 @@ function getFileNames() {
                 select.appendChild(opt);
             })
         })
+}
+
+function generateRandomString(length) {
+    let result = '';
+    let characters = '0123456789';
+    let charactersLength = characters.length;
+    for (let i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
 }

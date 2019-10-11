@@ -5,8 +5,19 @@ const bodyParser = require('body-parser');
 const utils = require('./server/utils/utils');
 const aes = require('./server/services/aes');
 
+global.userMap = [];
+
 app.use('', express.static(__dirname + '/public'));
 app.use(bodyParser.json());
+
+app.use('', (req, res, next) => {
+    const id = req.get('Client-id');
+    let usr;
+    if (usr = userMap.find(u => u.id === id)) {
+        process.env.SESSION_KEY = usr.key;
+    }
+    next();
+});
 
 app.get('/getText', async (req, res) => {
     const [content, iv] = aes.OFB(await utils.readFile(req.query.name));
@@ -19,6 +30,10 @@ app.get('/getFiles', async (req, res) => {
 
 app.post('/sendKey', (req, res) => {
     utils.createSessionKey();
+    userMap.push({
+        id: req.get('Client-id'),
+        key: process.env.SESSION_KEY
+    });
     res.send(utils.encryptSessionKey(utils.getSessionKey(), req.body.e, req.body.n));
 });
 
