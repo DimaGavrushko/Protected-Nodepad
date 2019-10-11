@@ -14,24 +14,7 @@ function getItemFromStorage(name) {
 function sendOpenKeyToServer() {
     let keysPair = generateRSAKeys();
     setRSAKeyInStorage(keysPair);
-
-    fetch('/sendKey', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Client-id': sessionStorage.getItem('id')
-        },
-        body: JSON.stringify({
-            n: keysPair.n.value.toString(),
-            e: keysPair.e.value.toString()
-        })
-    })
-        .then(res => res.json())
-        .then(sessionKeyArray => {
-            keysPair = JSON.parse(getItemFromStorage('secret RSA key'));
-            const sessionKey = decryptSessionKey(sessionKeyArray, keysPair.d, keysPair.n);
-            sessionStorage.setItem('session key', sessionKey);
-        })
+    sendKeyRequest(keysPair);
 }
 
 function decryptSessionKey(keyArray, d, n) {
@@ -40,26 +23,6 @@ function decryptSessionKey(keyArray, d, n) {
         res += String.fromCharCode(RSA.decrypt(c, d, n).value.toString());
     });
     return res;
-}
-
-function getFileNames() {
-    fetch('/getFiles', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Client-id': sessionStorage.getItem('id')
-        }
-    })
-        .then(res => res.json())
-        .then(fileNames => {
-            const select = document.getElementById('file-names');
-            fileNames.forEach(name => {
-                const opt = document.createElement('option');
-                opt.value = name;
-                opt.innerHTML = name;
-                select.appendChild(opt);
-            })
-        })
 }
 
 function generateRandomString(length) {

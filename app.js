@@ -15,7 +15,14 @@ app.use('', (req, res, next) => {
     let usr;
     if (usr = userMap.find(u => u.id === id)) {
         process.env.SESSION_KEY = usr.key;
+    } else {
+        utils.createSessionKey();
+        userMap.push({
+            id: req.get('Client-id'),
+            key: process.env.SESSION_KEY
+        });
     }
+
     next();
 });
 
@@ -29,11 +36,6 @@ app.get('/getFiles', async (req, res) => {
 });
 
 app.post('/sendKey', (req, res) => {
-    utils.createSessionKey();
-    userMap.push({
-        id: req.get('Client-id'),
-        key: process.env.SESSION_KEY
-    });
     res.send(utils.encryptSessionKey(utils.getSessionKey(), req.body.e, req.body.n));
 });
 

@@ -52,6 +52,7 @@ let keySchedule = [
  * @return {*[]}
  */
 function OFB(text) {
+    keyExpansion();
     let state = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', ''],];
     let kI = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', ''],];
     let ivStr = utils.generateRandomString(16);
@@ -182,7 +183,6 @@ function addRoundKey(block, roundKey) {
 }
 
 function encryptBlock(block) {
-    keyExpansion();
     let newBlock = block;
     newBlock = addRoundKey(newBlock, keySchedule[0]);
     for (let i = 1; i < 10; i++) {
