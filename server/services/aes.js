@@ -51,11 +51,11 @@ let keySchedule = [
 /**
  * @return {*[]}
  */
-function OFB(text) {
-    keyExpansion();
+function OFB(text, type, iv = null) {
+    keyExpansion(type);
     let state = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', ''],];
     let kI = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', ''],];
-    let ivStr = utils.generateRandomString(16);
+    let ivStr = iv || utils.generateRandomString(16);
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             kI[i][j] = (ivStr.charCodeAt(j * 4 + i)).toString(16);
@@ -91,9 +91,9 @@ function getState(text, start, end) {
     return state;
 }
 
-function getCipherKey() {
+function getCipherKey(type) {
     let res = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', ''],];
-    let key = process.env.SESSION_KEY;
+    let key = type === 'client' ? process.env.SESSION_KEY : process.env.STORAGE_SECRET_KEY;
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
             res[i][j] = (key.charCodeAt(j * 4 + i)).toString(16);
@@ -103,8 +103,8 @@ function getCipherKey() {
     return res;
 }
 
-function keyExpansion() {
-    keySchedule[0] = getCipherKey();
+function keyExpansion(type) {
+    keySchedule[0] = getCipherKey(type);
 
     for (let i = 1; i <= 10; i++) {
         let tmpCol = [

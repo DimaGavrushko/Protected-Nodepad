@@ -52,10 +52,9 @@ let keySchedule = [
 function OFB(text, iv) {
     let state = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', ''],];
     let kI = [['', '', '', ''], ['', '', '', ''], ['', '', '', ''], ['', '', '', ''],];
-    let ivStr = iv;
     for (let i = 0; i < 4; i++) {
         for (let j = 0; j < 4; j++) {
-            kI[i][j] = (ivStr.charCodeAt(j * 4 + i)).toString(16);
+            kI[i][j] = (iv.charCodeAt(j * 4 + i)).toString(16);
         }
     }
     let res = '';
