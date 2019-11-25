@@ -11,5 +11,10 @@ function getText() {
 function getLoginFormSubmit() {
     const email = document.getElementById('inputEmail').value;
     const password = document.getElementById('inputPassword').value;
-    loginRequest(email, password);
+    checkPasswordRequest(email, password);
+}
+
+function getTokenFormSubmit(email) {
+    const token = document.getElementById('inputToken').value;
+    checkTokenRequest(email, token);
 }

@@ -14,7 +14,7 @@ function getItemFromStorage(name) {
 function sendOpenKeyToServer() {
     let keysPair = generateRSAKeys();
     setRSAKeyInStorage(keysPair);
-    sendKeyRequest(keysPair);
+    getSessionKeyRequest(keysPair);
 }
 
 function decryptSessionKey(keyArray, d, n) {

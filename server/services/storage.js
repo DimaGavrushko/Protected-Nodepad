@@ -1,7 +1,7 @@
-const utils = require('./utils');
+const utils = require('../utils/utils');
 const util = require('util');
 const fs = require('fs');
-const aes = require('../services/aes');
+const aes = require('./aes');
 
 const iv = '*G-KaPdRgUkXp2s5';
 

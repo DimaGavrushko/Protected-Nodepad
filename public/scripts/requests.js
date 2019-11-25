@@ -8,8 +8,8 @@ function getTextRequest(name) {
         });
 }
 
-function sendKeyRequest(keysPair) {
-    fetchWrapper('/auth/sendKey', {
+function getSessionKeyRequest(keysPair) {
+    fetchWrapper('/auth/getSessionKey', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -27,8 +27,8 @@ function sendKeyRequest(keysPair) {
         });
 }
 
-async function loginRequest(email, password) {
-    const user = await (await fetchWrapper('/auth/checkPassword', {
+async function checkPasswordRequest(email, password) {
+    const res = await (await fetchWrapper('/auth/checkPassword', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -39,9 +39,27 @@ async function loginRequest(email, password) {
         })
     })).json();
 
-    if (!user.error) {
+    if (!res.error) {
         const mainContainer = document.getElementById('main');
-        mainContainer.innerHTML = getMainPage(user.email);
+        mainContainer.innerHTML = getTokenPage(res.email);
+    }
+}
+
+async function checkTokenRequest(email, token) {
+    const res = await (await fetchWrapper('/auth/checkToken', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email,
+            token
+        })
+    })).json();
+
+    if (!res.error) {
+        const mainContainer = document.getElementById('main');
+        mainContainer.innerHTML = getMainPage(res.email);
         sendOpenKeyToServer();
         getFilesRequest();
     }
