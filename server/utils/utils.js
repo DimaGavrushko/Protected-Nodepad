@@ -3,7 +3,6 @@ const fs = require('fs');
 const util = require('util');
 const shajs = require('sha.js');
 
-
 function generateRandomString(length) {
     let result = '';
     let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -19,8 +18,15 @@ function createSessionKey() {
     process.env.SESSION_KEY = generateRandomString(16);
 }
 
+function createSessionKeyForUser(token) {
+    createSessionKey();
+    userMap.push({
+        id: token,
+        key: process.env.SESSION_KEY
+    });
+}
+
 function getSessionKey() {
-    //return fs.readFileSync('key.txt', 'utf8');
     return process.env.SESSION_KEY;
 }
 
@@ -58,5 +64,6 @@ module.exports = {
     encryptSessionKey,
     readAllFileNames,
     readFile,
-    sha256
+    sha256,
+    createSessionKeyForUser
 };

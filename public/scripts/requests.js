@@ -39,22 +39,24 @@ async function checkPasswordRequest(email, password) {
         })
     })).json();
 
-    const pass = await sha256(password, 1000 - a);
+    if (!a.error) {
+      const pass = await sha256(password, 1000 - a);
 
-    const res = await (await fetchWrapper('/auth/checkPassword', {
+      const res = await (await fetchWrapper('/auth/checkPassword', {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            email,
-            password: pass
+          email,
+          password: pass
         })
-    })).json();
+      })).json();
 
-    if (!res.error) {
+      if (!res.error) {
         const mainContainer = document.getElementById('main');
         mainContainer.innerHTML = getTokenPage(res.email);
+      }
     }
 }
 
