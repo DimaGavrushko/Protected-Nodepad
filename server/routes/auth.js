@@ -91,7 +91,7 @@ router.post('/checkToken', (req, res) => {
                           error: 'Incorrect token'
                       });
                 } else {
-                    const payload = {email};
+                    const payload = {email, date: Date.now()};
                     await User.updateOne({ email }, { token: null,  __a: user.__a + 1 });
                     const token = jwt.sign(payload, process.env.JWT_SECRET, {
                         expiresIn: '1h'
