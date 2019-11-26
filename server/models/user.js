@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
+const utils = require('../utils/utils');
 
 const salt = bcrypt.genSaltSync(10);
 
@@ -10,6 +11,7 @@ const UserSchema = new mongoose.Schema({
         unique: true
     },
     password: { type: String, required: true },
+    __a: { type: Number },
     token: { type: String }
 });
 
@@ -34,7 +36,8 @@ UserSchema.pre('save', function(next) {
 });
 
 UserSchema.methods.isCorrectPassword = function(password, callback){
-    bcrypt.compare(password, this.password, function(err, same) {
+    const pass = utils.sha256(password, this.__a, 'hex');
+    bcrypt.compare(pass, this.password, function(err, same) {
         if (err) {
             callback(err);
         } else {

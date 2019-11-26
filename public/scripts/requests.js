@@ -28,6 +28,19 @@ function getSessionKeyRequest(keysPair) {
 }
 
 async function checkPasswordRequest(email, password) {
+    const a = await (await fetchWrapper('/auth/getA', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email
+
+        })
+    })).json();
+
+    const pass = await sha256(password, 1000 - a);
+
     const res = await (await fetchWrapper('/auth/checkPassword', {
         method: 'POST',
         headers: {
@@ -35,7 +48,7 @@ async function checkPasswordRequest(email, password) {
         },
         body: JSON.stringify({
             email,
-            password
+            password: pass
         })
     })).json();
 

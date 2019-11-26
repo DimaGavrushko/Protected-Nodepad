@@ -13,7 +13,7 @@ async function sendEmail(email) {
             pass: process.env.EMAIL_PASS
         }
     });
-    const token = utils.generateRandomString(16);
+    const token = utils.generateRandomString(128);
     const hashedToken = await bcrypt.hash(token, 10);
     await User.updateOne({ email }, { token: hashedToken });
 

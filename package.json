@@ -21,6 +21,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.12",
     "nodemailer": "^6.3.1",
-    "nodemon": "^1.19.3"
+    "nodemon": "^1.19.3",
+    "sha.js": "^2.4.11"
   }
 }

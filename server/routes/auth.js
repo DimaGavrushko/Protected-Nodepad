@@ -6,6 +6,27 @@ const utils = require('../utils/utils');
 const sendToken = require('../services/email');
 const bcrypt = require('bcryptjs');
 
+router.post('/getA', (req, res) => {
+    const {email} = req.body;
+
+    User.findOne({email}, function (err, user) {
+        if (err) {
+            console.error(err);
+            res.status(500)
+              .json({
+                  error: 'Internal error please try again'
+              });
+        } else if (!user) {
+            res.status(401)
+              .json({
+                  error: 'Incorrect email or password'
+              });
+        } else {
+            res.status(200).json(user.__a);
+        }
+    });
+});
+
 router.post('/checkPassword', (req, res) => {
     const {email, password} = req.body;
 
@@ -58,14 +79,20 @@ router.post('/checkToken', (req, res) => {
                     error: 'Incorrect email or password'
                 });
         } else {
-            bcrypt.compare(token, user.token, function (err, same) {
+            bcrypt.compare(token, user.token, async function (err, same) {
                 if (err) {
                     res.status(500)
-                        .json({
-                            error: 'Internal error please try again'
-                        });
+                      .json({
+                          error: 'Internal error please try again'
+                      });
+                } else if (!same) {
+                    res.status(401)
+                      .json({
+                          error: 'Incorrect token'
+                      });
                 } else {
                     const payload = {email};
+                    await User.updateOne({ email }, { token: null,  __a: user.__a + 1 });
                     const token = jwt.sign(payload, process.env.JWT_SECRET, {
                         expiresIn: '1h'
                     });
@@ -100,7 +127,7 @@ router.get('/tryAuth', withAuth, function (req, res) {
 
 router.post('/register', function (req, res) {
     const {email, password} = req.body;
-    const user = new User({email, password});
+    const user = new User({email, password, __a: 1});
 
     user.save(function (err) {
         if (err) {

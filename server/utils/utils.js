@@ -1,6 +1,7 @@
 const bigInt = require("big-integer");
 const fs = require('fs');
 const util = require('util');
+const shajs = require('sha.js');
 
 
 function generateRandomString(length) {
@@ -41,11 +42,21 @@ async function readFile(name) {
     return await readFile(`server/files/${name}`, 'utf8');
 }
 
+function sha256(string, iterations = 1, stringType = 'ascii' ) {
+    let buff = Buffer.from(string, stringType);
+    for (let i = 0; i < iterations; i++) {
+        buff = shajs('sha256').update(buff).digest()
+    }
+
+    return buff.toString('hex');
+}
+
 module.exports = {
     getSessionKey,
     generateRandomString,
     createSessionKey,
     encryptSessionKey,
     readAllFileNames,
-    readFile
+    readFile,
+    sha256
 };
