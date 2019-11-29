@@ -96,6 +96,10 @@ router.get('/tryAuth', withAuth, async (req, res) => {
     }
 });
 
+router.get('/logout', withAuth, async (req, res) => {
+    res.status(200).cookie('token', null, {httpOnly: true}).json({ email: req.email });
+});
+
 router.post('/register', function (req, res) {
     const {email, password} = req.body;
     const user = new User({email, password, __a: 1});

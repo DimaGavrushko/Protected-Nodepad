@@ -16,3 +16,8 @@
     margin: auto;
     position: absolute;
 }
+
+.header {
+    display: flex;
+    justify-content: space-between;
+}

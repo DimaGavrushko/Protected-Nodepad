@@ -60,6 +60,20 @@ async function checkPasswordRequest(email, password) {
     }
 }
 
+async function logoutRequest() {
+    const res = await (await fetchWrapper('/auth/logout', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })).json();
+
+    if (!res.error) {
+        const mainContainer = document.getElementById('main');
+        mainContainer.innerHTML = getLoginPage();
+    }
+}
+
 async function checkTokenRequest(email, token) {
     const res = await (await fetchWrapper('/auth/checkToken', {
         method: 'POST',
@@ -78,7 +92,6 @@ async function checkTokenRequest(email, token) {
         sendOpenKeyToServer();
         getFilesRequest();
     }
-
 }
 
 async function tryAuthRequest() {

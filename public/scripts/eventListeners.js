@@ -18,3 +18,7 @@ function getTokenFormSubmit(email) {
     const token = document.getElementById('inputToken').value;
     checkTokenRequest(email, token);
 }
+
+function logout() {
+    logoutRequest();
+}

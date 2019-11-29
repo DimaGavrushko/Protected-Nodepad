@@ -1,6 +1,9 @@
 function getMainPage(name) {
     return `
-     <h6>Привет, ${name}</h6>
+     <div class="header">
+        <h6>Привет, ${name}</h6>
+        <button type="button" class="btn btn-primary" onclick="logout()">Выйти</button>
+     </div>
      <button type="button" class="btn-sm btn-primary margin-bottom" onclick="generateNewRSAKey()">Сгенерировать новый ключ</button>
 
     <div class="form-group">
