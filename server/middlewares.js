@@ -16,7 +16,7 @@ const withAuth = function(req, res, next) {
   } else {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
-        res.status(401).send("Unauthorized: Invalid token");
+        res.status(401).send('Unauthorized: Invalid token');
       } else {
         req.email = decoded.email;
         next();

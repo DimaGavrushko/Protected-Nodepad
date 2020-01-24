@@ -9,8 +9,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npm run lint:js",
     "lint:js": "npx eslint . --ext .js",
-    "format": "npx eslint . --fix --ext .js",
-    "prettier": "npx prettier --write .js"
+    "format": "npx eslint . --fix --ext .js"
   },
   "author": "",
   "license": "ISC",
@@ -39,7 +38,6 @@
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-prettier": "^3.0.1",
     "eslint-plugin-promise": "^4.0.1",
-    "babel-eslint": "^10.0.1",
-    "prettier": "1.16.1"
+    "babel-eslint": "^10.0.1"
   }
 }

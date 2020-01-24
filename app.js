@@ -19,7 +19,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
-  .then(() => console.log("Successfully connected to database"));
+  .then(() => console.log('Successfully connected to database'));
 
 app.use(express.static(`${__dirname}/public`));
 app.use(bodyParser.json());

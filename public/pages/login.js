@@ -1,5 +1,5 @@
-import { addListenerToButton } from "../scripts/utils.js";
-import { getLoginFormSubmit } from "../scripts/eventListeners.js";
+import { addListenerToButton } from '../scripts/utils.js';
+import { getLoginFormSubmit } from '../scripts/eventListeners.js';
 
 export default function getLoginPage() {
   const mainContainer = document.getElementById('main');

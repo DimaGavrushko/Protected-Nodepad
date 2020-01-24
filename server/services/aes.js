@@ -396,7 +396,7 @@ function keyExpansion(type) {
 }
 
 function subByte(byte) {
-  if (byte.length === 1) byte = '0' + byte;
+  if (byte.length === 1) byte = `0${byte}`;
   const i = parseInt(byte[0], 16);
   const j = parseInt(byte[1], 16);
   return Sbox[i * 16 + j].toString(16);

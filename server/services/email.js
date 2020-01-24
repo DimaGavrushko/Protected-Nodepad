@@ -1,11 +1,11 @@
 const nodemailer = require('nodemailer');
-const bcrypt = require("bcryptjs");
-const utils = require("../utils/utils");
+const bcrypt = require('bcryptjs');
+const utils = require('../utils/utils');
 const User = require('../models/user');
 
 async function sendEmail(email) {
   const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
+    host: 'smtp.ethereal.email',
     port: 587,
     secure: false,
     auth: {
@@ -20,7 +20,7 @@ async function sendEmail(email) {
   await transporter.sendMail({
     from: '"Protected Notepad" <protectedNotepad@gmail.com>',
     to: email,
-    subject: "Activation token",
+    subject: 'Activation token',
     text: token
   });
 }

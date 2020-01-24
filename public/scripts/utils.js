@@ -1,5 +1,5 @@
-import { getSessionKeyRequest } from "./requests.js";
-import RSA from "./rsa.js";
+import { getSessionKeyRequest } from './requests.js';
+import RSA from './rsa.js';
 
 export function generateRSAKeys() {
   return RSA.generate(128);

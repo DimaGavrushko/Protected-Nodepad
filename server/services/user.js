@@ -1,10 +1,10 @@
-const User = require("../models/user");
+const User = require('../models/user');
 
 function getUserByEmail(email) {
   return User.findOne({ email })
     .then(user => {
       if (!user) {
-        throw new Error("Incorrect email");
+        throw new Error('Incorrect email');
       } else {
         return user;
       }

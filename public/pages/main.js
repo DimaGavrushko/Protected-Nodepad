@@ -1,9 +1,9 @@
-import { addListenerToButton } from "../scripts/utils.js";
+import { addListenerToButton } from '../scripts/utils.js';
 import {
   logout,
   generateNewRSAKey,
   getText
-} from "../scripts/eventListeners.js";
+} from '../scripts/eventListeners.js';
 
 export default function getMainPage(name) {
   const mainContainer = document.getElementById('main');

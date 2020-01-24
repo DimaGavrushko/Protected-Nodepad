@@ -1,4 +1,4 @@
-const bigInt = require("big-integer");
+const bigInt = require('big-integer');
 const fs = require('fs');
 const util = require('util');
 const shajs = require('sha.js');

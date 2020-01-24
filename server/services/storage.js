@@ -1,6 +1,6 @@
-const util = require("util");
-const fs = require("fs");
-const utils = require("../utils/utils");
+const util = require('util');
+const fs = require('fs');
+const utils = require('../utils/utils');
 const aes = require('./aes');
 
 const iv = '*G-KaPdRgUkXp2s5';

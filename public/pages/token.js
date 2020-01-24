@@ -1,5 +1,5 @@
-import { addListenerToButton } from "../scripts/utils.js";
-import { getTokenFormSubmit } from "../scripts/eventListeners.js";
+import { addListenerToButton } from '../scripts/utils.js';
+import { getTokenFormSubmit } from '../scripts/eventListeners.js';
 
 export default function getTokenPage(email) {
   const mainContainer = document.getElementById('main');

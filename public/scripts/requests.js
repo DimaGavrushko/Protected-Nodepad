@@ -3,11 +3,11 @@ import {
   getItemFromStorage,
   sha256,
   sendOpenKeyToServer
-} from "./utils.js";
-import getLoginPage from "../pages/login.js";
-import getTokenPage from "../pages/token.js";
-import getMainPage from "../pages/main.js";
-import OFB from "./aes.js";
+} from './utils.js';
+import getLoginPage from '../pages/login.js';
+import getTokenPage from '../pages/token.js';
+import getMainPage from '../pages/main.js';
+import OFB from './aes.js';
 
 export function getTextRequest(name) {
   fetchWrapper(`/getText?name=${name}`)
@@ -129,6 +129,6 @@ function fetchWrapper(url, options = {}) {
     headers: {
       ...(options.headers || {})
     },
-    credentials: "same-origin"
+    credentials: 'same-origin'
   });
 }

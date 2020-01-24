@@ -1,11 +1,11 @@
 const router = require('express').Router();
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const User = require("../models/user");
-const { withAuth } = require("../middlewares");
-const utils = require("../utils/utils");
-const sendToken = require("../services/email");
-const userService = require("../services/user");
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
+const User = require('../models/user');
+const { withAuth } = require('../middlewares');
+const utils = require('../utils/utils');
+const sendToken = require('../services/email');
+const userService = require('../services/user');
 
 router.post('/getA', async (req, res) => {
   const { email } = req.body;
@@ -27,11 +27,11 @@ router.post('/checkPassword', async (req, res) => {
     user.isCorrectPassword(password, async (err, same) => {
       if (err) {
         res.status(500).json({
-          error: "Internal error please try again"
+          error: 'Internal error please try again'
         });
       } else if (!same) {
         res.status(401).json({
-          error: "Incorrect password"
+          error: 'Incorrect password'
         });
       } else {
         await sendToken(email);
@@ -53,22 +53,22 @@ router.post('/checkToken', async (req, res) => {
     bcrypt.compare(token, user.token, async (err, same) => {
       if (err) {
         res.status(500).json({
-          error: "Internal error please try again"
+          error: 'Internal error please try again'
         });
       } else if (!same) {
         res.status(401).json({
-          error: "Incorrect token"
+          error: 'Incorrect token'
         });
       } else {
         const payload = { email, date: Date.now() };
         await User.updateOne({ email }, { token: null, __a: user.__a + 1 });
         const token = jwt.sign(payload, process.env.JWT_SECRET, {
-          expiresIn: "1h"
+          expiresIn: '1h'
         });
         utils.createSessionKeyForUser(token);
         res
           .status(200)
-          .cookie("token", token, { httpOnly: true })
+          .cookie('token', token, { httpOnly: true })
           .json({ email });
       }
     });
@@ -106,7 +106,7 @@ router.post('/register', (req, res) => {
     if (err) {
       res.status(500).send(err.message);
     } else {
-      res.status(200).send("Success");
+      res.status(200).send('Success');
     }
   });
 });
