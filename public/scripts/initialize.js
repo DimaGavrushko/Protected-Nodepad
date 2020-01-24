@@ -1,14 +1,20 @@
-async function initializeApp() {
-    const userResponse = await tryAuthRequest();
-    const mainContainer = document.getElementById('main');
-    if (userResponse.status === 200) {
-        const user = await userResponse.json();
-        mainContainer.innerHTML = getMainPage(user.email);
-        sendOpenKeyToServer();
-        getFilesRequest();
-    } else {
-        mainContainer.innerHTML = getLoginPage();
-    }
-}
+import { getFilesRequest, tryAuthRequest } from './requests.js';
+import { sendOpenKeyToServer } from './utils.js';
+import getMainPage from '../pages/main.js';
+import getLoginPage from '../pages/login.js';
 
-initializeApp();
+(async function() {
+  async function initializeApp() {
+    const userResponse = await tryAuthRequest();
+    if (userResponse.status === 200) {
+      const user = await userResponse.json();
+      getMainPage(user.email);
+      sendOpenKeyToServer();
+      getFilesRequest();
+    } else {
+      getLoginPage();
+    }
+  }
+
+  await initializeApp();
+})();

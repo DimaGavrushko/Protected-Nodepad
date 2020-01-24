@@ -1,8 +1,7 @@
 const User = require("../models/user");
 
-
 function getUserByEmail(email) {
-  return User.findOne({email})
+  return User.findOne({ email })
     .then(user => {
       if (!user) {
         throw new Error("Incorrect email");
@@ -11,8 +10,8 @@ function getUserByEmail(email) {
       }
     })
     .catch(err => {
-        throw err;
-    })
+      throw err;
+    });
 }
 
 module.exports = {
